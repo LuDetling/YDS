@@ -1,0 +1,86 @@
+//navigation
+.react-calendar__navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: $quaternary;
+    text-transform: capitalize;
+
+    button {
+        border: 2px solid $quaternary;
+        padding: 10px;
+        background-color: inherit;
+        border-radius: 5px;
+        color: $quaternary;
+        transition: 0.3s;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        &:hover {
+            background-color: $quaternary;
+            color: $primary;
+        }
+    }
+}
+
+//days name
+.react-calendar__month-view__weekdays {
+    text-align: center;
+    display: grid !important;
+    grid-template-columns: repeat(7, 1fr) !important;
+    gap: 1rem;
+    margin: 20px 0;
+    div {
+        cursor: pointer;
+        border-radius: 5px;
+        padding: 1rem;
+        border: 2px solid $tertiary;
+        color: $tertiary;
+        transition: 0.3s;
+        &:hover {
+            color: white;
+            background-color: $tertiary;
+        }
+        abbr {
+            text-decoration: none;
+            text-transform: capitalize;
+        }
+    }
+}
+// days number
+.react-calendar__month-view__days {
+    text-align: center;
+    display: grid !important;
+    grid-template-columns: repeat(7, 1fr) !important;
+    gap: 1rem;
+    button {
+        font-size: 1rem;
+        cursor: pointer;
+        padding: 1rem;
+        background-color: inherit;
+        transition: 0.3s;
+        border: 2px solid $secondary;
+        border-radius: 5px;
+        color: $secondary;
+        &:hover {
+            color: $primary;
+            background-color: $secondary;
+        }
+    }
+    .react-calendar__tile--now {
+        color: $primary;
+        background-color: $quaternary;
+        border-color: $quaternary;
+        &:hover {
+            border-color: $secondary;
+        }
+    }
+    .react-calendar__tile--active,
+    .react-calendar__tile--range,
+    .react-calendar__tile--rangeStart,
+    .react-calendar__tile--rangeEnd,
+    .react-calendar__tile--rangeBothEnds {
+        color: $primary;
+        background-color: $secondary;
+    }
+}

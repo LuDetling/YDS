@@ -1,3 +1,9 @@
+import Agenda from "../../components/Agenda";
+
 export default function Home() {
-  return <div>Bienvenue sur la page d'accueil</div>;
+  return (
+    <>
+      <Agenda />
+    </>
+  );
 }
