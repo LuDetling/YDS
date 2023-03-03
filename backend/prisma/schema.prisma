@@ -16,4 +16,5 @@ model user {
   lastName  String @db.VarChar(255)
   email     String @unique
   password  String @db.VarChar(255)
+  statut    String @default(value: "user") @db.VarChar(255)
 }

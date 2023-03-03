@@ -42,6 +42,8 @@ export default function Header() {
       <div className="right-nav">
         <NavLink to="profil">Profil</NavLink>
         <NavLink to="idees">Idees</NavLink>
+        <NavLink to="login">Se connecter</NavLink>
+        <NavLink to="signup">S'inscrire</NavLink>
       </div>
     </HeaderContent>
   );
