@@ -43,7 +43,7 @@ exports.addUser = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
     try {
-        const user = await prisma.User.findUnique({
+        const user = await prisma.user.findUnique({
             where: {
                 email: req.body.email,
             },
