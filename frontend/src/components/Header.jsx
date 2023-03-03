@@ -5,7 +5,7 @@ import colors from "../styles/colors";
 const HeaderContent = styled.header`
   display: flex;
   justify-content: space-between;
-  padding: 20px 100px;
+  padding: 20px;
   background-color: ${colors.primary};
   position: sticky;
   top: 0;

@@ -2,7 +2,7 @@ export default function Idees() {
   return (
     <ul>
       <li>
-        Voir si en html css ... si créer un gros calendrier ca n'existe pas deja
+        au click choisir entre 1 / 3 / 6 / 12 mois a afficher
       </li>
     </ul>
   );

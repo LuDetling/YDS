@@ -1,25 +1,51 @@
+.agenda-content {
+    background-color: $primary;
+    padding: 1rem;
+    margin: 2rem auto;
+    border-radius: 10px;
+    width: 90%;
+}
+
+.calendar-content {
+    background-color: white;
+    border-radius: 10px;
+    margin: auto;
+    border-radius: 10px;
+    overflow: hidden;
+}
 //navigation
+
 .react-calendar__navigation {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: $quaternary;
     text-transform: capitalize;
-
+    background-color: $secondary;
+    .react-calendar__navigation__next2-button,
+    .react-calendar__navigation__prev2-button {
+        display: none;
+    }
+    
     button {
-        border: 2px solid $quaternary;
-        padding: 10px;
-        background-color: inherit;
-        border-radius: 5px;
-        color: $quaternary;
-        transition: 0.3s;
         cursor: pointer;
+        border: none;
+        padding: 1rem;
+        background-color: inherit;
+        transition: 0.3s;
+        flex-grow: inherit !important;
         font-size: 16px;
         font-weight: bold;
         &:hover {
-            background-color: $quaternary;
             color: $primary;
+            background-color: white;
         }
+        span {
+            text-transform: capitalize;
+        }
+    }
+    .react-calendar__navigation__label {
+        border: none;
+        width: auto;
     }
 }
 
@@ -28,15 +54,16 @@
     text-align: center;
     display: grid !important;
     grid-template-columns: repeat(7, 1fr) !important;
-    gap: 1rem;
+    justify-content: center;
     margin: 20px 0;
     div {
         cursor: pointer;
-        border-radius: 5px;
-        padding: 1rem;
-        border: 2px solid $tertiary;
         color: $tertiary;
         transition: 0.3s;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         &:hover {
             color: white;
             background-color: $tertiary;
@@ -47,20 +74,19 @@
         }
     }
 }
+
 // days number
 .react-calendar__month-view__days {
     text-align: center;
     display: grid !important;
     grid-template-columns: repeat(7, 1fr) !important;
-    gap: 1rem;
     button {
-        font-size: 1rem;
         cursor: pointer;
-        padding: 1rem;
+        border: none;
+        font-size: 1rem;
+        height: 50px;
         background-color: inherit;
         transition: 0.3s;
-        border: 2px solid $secondary;
-        border-radius: 5px;
         color: $secondary;
         &:hover {
             color: $primary;
@@ -69,11 +95,9 @@
     }
     .react-calendar__tile--now {
         color: $primary;
-        background-color: $quaternary;
-        border-color: $quaternary;
-        &:hover {
-            border-color: $secondary;
-        }
+        background-color: $tertiary;
+        color: white;
+        border: 2px solid $tertiary;
     }
     .react-calendar__tile--active,
     .react-calendar__tile--range,
@@ -82,5 +106,10 @@
     .react-calendar__tile--rangeBothEnds {
         color: $primary;
         background-color: $secondary;
+    }
+    .react-calendar__month-view__days__day--neighboringMonth {
+        background-color: rgb(237, 225, 225);
+        border-color: $primary;
+        color: $primary;
     }
 }

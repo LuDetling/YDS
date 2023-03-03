@@ -1,9 +1,9 @@
-import Agenda from "../../components/Agenda";
+import CalendarComponent from "../../components/CalendarComponent";
 
 export default function Home() {
   return (
     <>
-      <Agenda />
+      <CalendarComponent />
     </>
   );
 }
