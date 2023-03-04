@@ -1,0 +1,23 @@
+.button {
+    text-decoration: none;
+    padding: 5px 10px;
+    background-color: $primary;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 5px;
+    border: 2px solid $secondary;
+    color: $secondary;
+    transition: 0.3s;
+    display: inline-block;
+    &.active {
+      color: $primary;
+      background-color: $secondary;
+    }
+    &:hover {
+      color: $primary;
+      background-color: $secondary;
+    }
+    &:not(:last-child) {
+      margin-right: 2rem;
+    }
+}
