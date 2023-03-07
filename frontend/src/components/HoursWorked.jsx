@@ -57,8 +57,8 @@ export default function HoursWorked() {
   return (
     <ContentSelector>
       {hoursArray.map((value) => (
-        <div className="content-hours">
-          <div key={value}>{value}</div>
+        <div className="content-hours" key={value}>
+          <div >{value}</div>
           <div className="select" onClick={(e) => hourSelected(e)}></div>
         </div>
       ))}

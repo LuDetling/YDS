@@ -1,3 +1,8 @@
 export default function Profil() {
-  return <div>coucou</div>;
+
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  console.log(user);
+
+  return <div>Bonjour {user.lastName}</div>;
 }
