@@ -1,7 +1,8 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import colors from "../styles/colors";
-// import { useSelector } from "react-redux";
+import Logout from '../pages/Log/Logout'
+import { useSelector } from "react-redux";
 
 const HeaderContent = styled.header`
   display: flex;
@@ -18,15 +19,8 @@ const HeaderContent = styled.header`
 
 export default function Header() {
 
-  const navigate = useNavigate();
-  const connected = JSON.parse(localStorage.getItem("user"));
+  const { success } = useSelector(state => state.user)
 
-  const logout = () => {
-    console.log("test")
-    localStorage.removeItem("user");
-    navigate("/login");
-    return;
-  }
   return (
     <HeaderContent>
       <div className="left-nav">
@@ -34,10 +28,10 @@ export default function Header() {
       </div>
       <div className="right-nav">
         {
-          (connected && <>
+          (success && <>
             <NavLink to="profil" className="button">Profil</NavLink>
             <NavLink to="idees" className="button">Idees</NavLink>
-            <button onClick={logout} className="button danger-button">Se déconnecter</button>
+            <Logout />
           </>) || (
             <>
               <NavLink to="login" className="button">Se connecter</NavLink>
