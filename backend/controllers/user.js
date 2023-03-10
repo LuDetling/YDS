@@ -72,7 +72,8 @@ exports.login = async (req, res, next) => {
             ),
             statut: user.statut,
             firstName: user.firstName,
-            lastName: user.lastName
+            lastName: user.lastName,
+            email: user.email
         });
     } catch (error) {
         res.status(500).json({

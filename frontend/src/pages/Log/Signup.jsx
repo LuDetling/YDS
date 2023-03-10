@@ -1,30 +1,30 @@
-import { useState } from "react";
-import axios from 'axios';
 import { useForm } from 'react-hook-form'
 import colors from "../../styles/colors"
 
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { signupUser, loginUser } from "../../store/user/auth";
+
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Signup() {
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const { loading, errorEmail, success, userInfo } = useSelector(state => state.user.userSignup)
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const { register, handleSubmit, formState: { errors } } = useForm()
-    const [errorEmail, setErrorEmail] = useState(false);
+    useEffect(() => {
+        if (success) {
+            console.log(success);
+            console.log(userInfo);
+            dispatch(loginUser(userInfo))
+            navigate("/")
+        };
+    }, [navigate, dispatch, userInfo, success,]);
 
-    const onSubmit = async (user) => {
-        console.log(user);
-        try {
-            const data = await axios.post("http://localhost:5000/auth/signup", JSON.stringify(user), {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            // envoyer dans le localstorage les données de sa connection peut etre pendant 24h faut voir avec le back si je peux pas laisser tout le temps le token
-            return data
-        } catch (error) {
-            if (error.response.data.error.meta.target === "user_email_key") {
-                setErrorEmail(true);
-            }
-        }
+    const onSubmit = (user) => {
+        dispatch(signupUser(user))
     }
 
     return <ContentInscription>
@@ -47,7 +47,7 @@ export default function Signup() {
             {errors.lastName?.type && <p>Prénom requis et doit contenir minimum 2 lettres</p>}
             <div>
                 <label htmlFor="email">Email</label>
-                <input type="text" id="email" {...register("email", { required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i })} onChange={() => setErrorEmail(false)} placeholder="Email" />
+                <input type="text" id="email" {...register("email", { required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i })} placeholder="Email" />
             </div>
             {(errors.email?.type && <p>Email incorrect</p>) || (errorEmail === true && <p>Cette adresse email a déjà été utilisé</p>)}
             <div>
@@ -55,7 +55,10 @@ export default function Signup() {
                 <input type="password" id="password" {...register("password", { required: true, minLength: 8 })} placeholder="Mot de passe" />
             </div>
             {errors.password?.type && <p>Mot de passe trop court, minimum 8 charateres</p>}
-            <input type="submit" value="S'inscrire" className="button" />
+            {
+                loading ? <p>Chargement</p> : <input type="submit" value="S'inscrire" className="button" />
+            }
+
 
         </FormContent></ContentInscription>
 }

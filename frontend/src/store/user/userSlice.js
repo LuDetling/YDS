@@ -1,60 +1,62 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice } from "@reduxjs/toolkit";
+import { loginUser, signupUser } from "./auth"
 
 const initialState = {
-    userInfo: null,
-    loading: false,
-    success: false,
-    error: null,
-}
-
-// se connecter, peut etre mettre dans un autre fichier
-export const loginUser = createAsyncThunk("user/login", async (user, { rejectWithValue }) => {
-    try {
-        const response = await axios.post("http://localhost:5000/auth/login", JSON.stringify(user), {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        const data = JSON.stringify(response.data);
-        localStorage.setItem("user", data);
-        return response.data
-        // envoyer dans le localstorage les données de sa connection peut etre pendant 24h faut voir avec le back si je peux pas laisser tout le temps le token
-    } catch (error) {
-        return rejectWithValue(error.response.data.error)
+    userLogin: {
+        userInfo: JSON.parse(localStorage.getItem("user")),
+        loading: false,
+        success: false,
+        error: null,
+    },
+    userSignup: {
+        loading: false,
+        errorEmail: null,
+        success: false,
+        userInfo: {
+            email: null,
+            password: null
+        }
     }
-})
-
-
+}
 
 const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
         logoutUser: (state) => {
-            state.userInfo = null;
-            state.loading = false;
-            state.success = false;
-            state.error = null;
+            state.userLogin.userInfo = null;
+            state.userLogin.success = false;
             localStorage.removeItem("user");
         }
     },
     extraReducers: {
         [loginUser.pending]: (state) => {
-            state.loading = true;
-            state.error = null;
+            state.userLogin.loading = true;
+            state.userLogin.error = null;
         },
         [loginUser.fulfilled]: (state, { payload }) => {
-            state.user = payload;
-            state.loading = false;
-            state.success = true;
+            state.userLogin.userInfo = payload;
+            state.userLogin.loading = false;
+            state.userLogin.success = true;
         },
         [loginUser.rejected]: (state, { payload }) => {
-            console.log('error');
-            state.error = payload;
-            state.loading = false;
-
-            console.log(state.error);
+            state.userLogin.error = payload;
+            state.userLogin.loading = false;
+        },
+        [signupUser.pending]: (state) => {
+            state.userSignup.loading = true;
+            state.userSignup.error = null;
+        },
+        [signupUser.fulfilled]: (state, { payload }) => {
+            console.log(payload);
+            state.userSignup.userInfo.email = payload.email;
+            state.userSignup.userInfo.password = payload.password;
+            state.userSignup.loading = false;
+            state.userSignup.success = true;
+        },
+        [signupUser.rejected]: (state, { payload }) => {
+            state.userSignup.error = payload;
+            state.userSignup.loading = false;
         }
     }
 })

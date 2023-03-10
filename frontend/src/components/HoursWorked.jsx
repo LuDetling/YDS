@@ -1,28 +1,6 @@
 import styled from "styled-components";
 // import colors from "../styles/colors";
 
-const ContentSelector = styled.div`
-  margin: 2rem auto;
-  width: 200px;
-  .content-hours {
-    width: 100%;
-    display: flex;
-    div {
-      padding: 0.5rem;
-      border-bottom: 1px solid black;
-    }
-    .select {
-      cursor: pointer;
-      width: 100%;
-      border-left: 1px solid black;
-      &.active-hour {
-        background-color: hsl(1, 75%, 80%);
-        border-left-color: rgb(232, 95, 92);
-        border-bottom: none;
-      }
-    }
-  }
-`;
 const hoursArray = [];
 let min = 0;
 let hour = 8;
@@ -65,3 +43,26 @@ export default function HoursWorked() {
     </ContentSelector>
   );
 }
+
+const ContentSelector = styled.div`
+  margin: 2rem auto;
+  width: 200px;
+  .content-hours {
+    width: 100%;
+    display: flex;
+    div {
+      padding: 0.5rem;
+      border-bottom: 1px solid black;
+    }
+    .select {
+      cursor: pointer;
+      width: 100%;
+      border-left: 1px solid black;
+      &.active-hour {
+        background-color: hsl(1, 75%, 80%);
+        border-left-color: rgb(232, 95, 92);
+        border-bottom: none;
+      }
+    }
+  }
+`;

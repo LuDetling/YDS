@@ -4,7 +4,7 @@ import styled from "styled-components";
 import colors from "../../styles/colors";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
-import { loginUser } from '../../store/user/userSlice';
+import { loginUser } from '../../store/user/auth';
 
 export default function Login() {
 
@@ -12,7 +12,7 @@ export default function Login() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     // const [errorLogin, setErrorLogin] = useState("");
-    const { error, loading, userInfo, success } = useSelector(state => state.user)
+    const { error, loading, userInfo, success } = useSelector(state => state.user.userLogin)
 
     useEffect(() => {
         if (success) navigate("/");

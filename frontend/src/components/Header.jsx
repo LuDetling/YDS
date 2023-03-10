@@ -4,6 +4,7 @@ import colors from "../styles/colors";
 import Logout from '../pages/Log/Logout'
 import { useSelector } from "react-redux";
 
+
 const HeaderContent = styled.header`
   display: flex;
   justify-content: space-between;
@@ -18,9 +19,7 @@ const HeaderContent = styled.header`
 `;
 
 export default function Header() {
-
-  const { success } = useSelector(state => state.user)
-
+  const { userInfo } = useSelector(state => state.user.userLogin)
   return (
     <HeaderContent>
       <div className="left-nav">
@@ -28,7 +27,7 @@ export default function Header() {
       </div>
       <div className="right-nav">
         {
-          (success && <>
+          ((userInfo) && <>
             <NavLink to="profil" className="button">Profil</NavLink>
             <NavLink to="idees" className="button">Idees</NavLink>
             <Logout />

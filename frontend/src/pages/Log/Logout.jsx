@@ -6,9 +6,8 @@ export default function Logout() {
 
     const dispatch = useDispatch()
     const navigate = useNavigate();
-
     const logout = () => {
-        dispatch(logoutUser())
+        dispatch(logoutUser());
         navigate("/login");
         return;
     }
