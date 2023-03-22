@@ -10,11 +10,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model user {
-  id        Int    @id @default(autoincrement())
-  firstName String @db.VarChar(255)
-  lastName  String @db.VarChar(255)
-  email     String @unique
-  password  String @db.VarChar(255)
-  statut    String @default(value: "user") @db.VarChar(255)
+model User {
+  id        Int      @id @default(autoincrement())
+  firstName String   @db.VarChar(255)
+  lastName  String   @db.VarChar(255)
+  email     String   @unique
+  password  String   @db.VarChar(255)
+  statut    String   @default(value: "user") @db.VarChar(255)
+  clients   Client[]
+}
+
+model Client {
+  id       Int    @id @default(autoincrement())
+  name     String @db.VarChar(255)
+  workdate Json
+  user     User?  @relation(fields: [userId], references: [id])
+  userId   Int?
 }

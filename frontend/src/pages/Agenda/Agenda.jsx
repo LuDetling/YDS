@@ -1,10 +1,8 @@
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import FormClient from "../../components/FormClient";
 import HoursWorked from "../../components/HoursWorked";
-const AgendaContent = styled.section`
-  margin: 20px 0;
-  text-align: center;
-`;
+
 export default function Agenda() {
   const dateParams = useParams().date.split("-", 3),
     day = dateParams[0],
@@ -19,7 +17,20 @@ export default function Agenda() {
   return (
     <AgendaContent>
       <h1>{date}</h1>
-      <HoursWorked />
+      <Content >
+        <HoursWorked />
+        <FormClient />
+      </Content>
+
     </AgendaContent>
   );
 }
+const AgendaContent = styled.section`
+  margin: 20px 0;
+  text-align: center;
+`;
+
+const Content = styled.div`
+  display: flex;
+  justify-content: space-between;
+`

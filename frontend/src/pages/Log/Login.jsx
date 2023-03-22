@@ -11,7 +11,6 @@ export default function Login() {
     const { register, handleSubmit, formState: { errors } } = useForm()
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    // const [errorLogin, setErrorLogin] = useState("");
     const { error, loading, userInfo, success } = useSelector(state => state.user.userLogin)
 
     useEffect(() => {

@@ -1,14 +1,14 @@
 import Calendar from "react-calendar";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function CalendarComponent() {
   const navigate = useNavigate();
   const today = new Date().toLocaleDateString("fr-FR", {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
   });
-  const [user] = useState(JSON.parse(localStorage.getItem("user")));
+  const { userInfo } = useSelector(state => state.user.userLogin)
 
   const goToAgenda = (date) => {
     const day = date.getDate(),
@@ -18,7 +18,7 @@ export default function CalendarComponent() {
   };
   return (
     <div>
-      <Title>{user && <>bonjour {user.lastName} </>}nous sommes le {today}</Title>
+      <Title>{userInfo && <>bonjour {userInfo.lastName} </>}nous sommes le {today}</Title>
 
       <section className="agenda-content">
         <Calendar

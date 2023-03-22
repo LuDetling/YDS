@@ -16,8 +16,6 @@ export default function Signup() {
 
     useEffect(() => {
         if (success) {
-            console.log(success);
-            console.log(userInfo);
             dispatch(loginUser(userInfo))
             navigate("/")
         };

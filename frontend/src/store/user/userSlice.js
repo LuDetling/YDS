@@ -26,6 +26,8 @@ const userSlice = createSlice({
         logoutUser: (state) => {
             state.userLogin.userInfo = null;
             state.userLogin.success = false;
+            state.userSignup.userInfo.email = null;
+            state.userSignup.userInfo.password = null;
             localStorage.removeItem("user");
         }
     },
@@ -48,7 +50,6 @@ const userSlice = createSlice({
             state.userSignup.error = null;
         },
         [signupUser.fulfilled]: (state, { payload }) => {
-            console.log(payload);
             state.userSignup.userInfo.email = payload.email;
             state.userSignup.userInfo.password = payload.password;
             state.userSignup.loading = false;
