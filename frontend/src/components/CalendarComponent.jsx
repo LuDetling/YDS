@@ -23,7 +23,7 @@ export default function CalendarComponent() {
       <section className="agenda-content">
         <Calendar
           className="calendar-content"
-          onClickDay={(value) => goToAgenda(value)}
+          onClickDay={userInfo ? (value) => goToAgenda(value) : null}
         />
       </section>
     </div>

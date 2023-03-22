@@ -3,7 +3,7 @@ import colors from "../../styles/colors"
 
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { signupUser, loginUser } from "../../store/user/auth";
+import { signupUser, loginUser } from "../../features/user/auth";
 
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';

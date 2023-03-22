@@ -11,19 +11,19 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  firstName String   @db.VarChar(255)
-  lastName  String   @db.VarChar(255)
-  email     String   @unique
-  password  String   @db.VarChar(255)
-  statut    String   @default(value: "user") @db.VarChar(255)
-  clients   Client[]
+  id        Int       @id @default(autoincrement())
+  firstName String    @db.VarChar(255)
+  lastName  String    @db.VarChar(255)
+  email     String    @unique
+  password  String    @db.VarChar(255)
+  statut    String    @default(value: "user") @db.VarChar(255)
+  clients   Clients[]
 }
 
-model Client {
+model Clients {
   id       Int    @id @default(autoincrement())
   name     String @db.VarChar(255)
-  workdate Json
+  workdate Json?
   user     User?  @relation(fields: [userId], references: [id])
-  userId   Int?
+  userId   Int
 }

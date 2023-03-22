@@ -4,7 +4,7 @@ import styled from "styled-components";
 import colors from "../../styles/colors";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
-import { loginUser } from '../../store/user/auth';
+import { loginUser } from '../../features/user/auth';
 
 export default function Login() {
 

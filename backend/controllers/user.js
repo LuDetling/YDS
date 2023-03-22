@@ -28,7 +28,7 @@ exports.addUser = async (req, res, next) => {
         // alors on transforme le mot de passe
         if (user) {
             fetchUser.password = hash;
-            await prisma.user.create({ data: fetchUser });
+            await prisma.User.create({ data: fetchUser });
             res.status(201).json({
                 message: "Utilisateur créé !",
             });
@@ -43,7 +43,7 @@ exports.addUser = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
     try {
-        const user = await prisma.user.findUnique({
+        const user = await prisma.User.findUnique({
             where: {
                 email: req.body.email,
             },
