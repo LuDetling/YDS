@@ -12,7 +12,7 @@ export default function CalendarComponent() {
 
   const goToAgenda = (date) => {
     const day = date.getDate(),
-      month = date.getMonth(),
+      month = date.getMonth() + 1,
       year = date.getFullYear();
     navigate(`/agenda/${day}-${month}-${year}`);
   };

@@ -7,7 +7,7 @@ import { useState } from "react";
 
 
 
-export default function UpdateClient({ client, userId }) {
+export default function UpdateClient({ client, userId, }) {
     const dispatch = useDispatch();
     const [edit, setEdit] = useState(false)
 
@@ -18,10 +18,12 @@ export default function UpdateClient({ client, userId }) {
                 id: client.id,
                 name: e.target[0].value,
             })
-            dispatch(updateClientData(response.data.updateClients))
+            dispatch(updateClientData(response.data.updateClients));
+            setEdit(!edit);
         } catch (error) {
             console.log(error);
         }
+
     }
 
 

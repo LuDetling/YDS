@@ -1,5 +1,8 @@
 import styled from "styled-components";
-// import colors from "../styles/colors";
+import { useState } from "react";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { updateClientData, selectClient } from "../features/clients/clientsSlice";
 
 const hoursArray = [];
 let min = 0;
@@ -27,20 +30,97 @@ const allHours = () => {
 };
 allHours();
 
-export default function HoursWorked() {
-  const hourSelected = (e) => {
+const defaultWorkdate = {
+  date: null,
+  hours: []
+}
+
+
+export default function HoursWorked({ dateSelected }) {
+  const dispatch = useDispatch();
+  const [isSelected, setIsSelected] = useState(false)
+  const clientSelected = useSelector(state => state.clients.clientSelected);
+  const indexClientSelected = useSelector(state => state.clients.indexClientSelected)
+  // const checkDate = clientSelected.workdates.findIndex(date => date.date === dateSelected);
+
+  const checkHours = (indexHour, value) => {
+    return clientSelected.workdates[indexHour].hours.findIndex(hour => hour === value);
+  }
+
+  const checkDate = () => {
+    return clientSelected.workdates.findIndex(date => date.date === dateSelected);
+  }
+
+  const updateClient = async (data) => {
+    console.log(data);
+    try {
+      const response = await axios.put("http://localhost:5000/clients/" + clientSelected.userId, {
+        id: clientSelected.id,
+        workdates: data,
+      })
+      dispatch(updateClientData(response.data.updateClients));
+      dispatch(selectClient([response.data.updateClients, indexClientSelected]))
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const initClient = (hour) => {
+    return clientSelected.workdates.map((item) => ({
+      ...item,
+      date: dateSelected,
+      hours: hour
+    }))
+  }
+
+  const activeBackground = (e, hours) => {
+    setIsSelected(true);
     e.target.classList.toggle("active-hour");
-  };
+
+  }
+
+  // Peut etre moyen de refactoriser ce morceau
+  const activeHours = (e, hours) => {
+    e.preventDefault();
+    activeBackground(e, hours)
+    const arrayWorkdates = [...clientSelected.workdates];
+    const indexDate = checkDate();
+
+    if (indexDate === -1) {
+      defaultWorkdate.date = dateSelected;
+      defaultWorkdate.hours.push(hours);
+      arrayWorkdates.push(defaultWorkdate);
+      updateClient(arrayWorkdates);
+      return
+    }
+
+    const indexHour = checkHours(indexDate, hours);
+    const recupHour = [...clientSelected.workdates[indexDate].hours];
+
+    // si date ou hours son vide alors on change
+    if (indexHour === -1) {
+      recupHour.push(hours)
+      const data = initClient(recupHour);
+      updateClient(data);
+    } else {
+      const filterHour = recupHour.filter(e => e !== hours)
+      const data = initClient(filterHour);
+      updateClient(data);
+    }
+  }
 
   return (
-    <ContentSelector>
+    <ContentSelector id="content-hours" >
       {hoursArray.map((value) => (
-        <div className="content-hours" key={value}>
+        <div className="content-hours" key={value} >
           <div >{value}</div>
-          <div className="select" onClick={(e) => hourSelected(e)}></div>
+          {
+            clientSelected ? <div className={clientSelected.workdates[indexClientSelected].hours.find(hour => hour === value) ? "select active-hour" : "select"} onMouseDown={clientSelected ? (e) => activeHours(e, value) : null} onMouseOver={isSelected && clientSelected ? (e) => activeHours(e, value) : null} onMouseUp={() => setIsSelected(false)} onMouseOut={() => setIsSelected(false)}></div> : <div className="select"> </div>
+          }
         </div>
-      ))}
-    </ContentSelector>
+      ))
+      }
+    </ContentSelector >
   );
 }
 

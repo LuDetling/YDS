@@ -6,7 +6,7 @@ import HoursWorked from "../../components/HoursWorked";
 export default function Agenda() {
   const dateParams = useParams().date.split("-", 3),
     day = dateParams[0],
-    month = dateParams[1],
+    month = dateParams[1] - 1,
     year = dateParams[2],
     date = new Date(year, month, day).toLocaleDateString("fr-FR", {
       weekday: "long",
@@ -18,8 +18,8 @@ export default function Agenda() {
     <AgendaContent>
       <h1>{date}</h1>
       <Content >
-        <HoursWorked />
-        <FormClient />
+        <HoursWorked dateSelected={useParams().date} />
+        <FormClient dateSelected={useParams().date} />
       </Content>
 
     </AgendaContent>

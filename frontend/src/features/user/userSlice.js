@@ -31,34 +31,35 @@ const userSlice = createSlice({
             localStorage.removeItem("user");
         }
     },
-    extraReducers: {
-        [loginUser.pending]: (state) => {
-            state.userLogin.loading = true;
-            state.userLogin.error = null;
-        },
-        [loginUser.fulfilled]: (state, { payload }) => {
-            state.userLogin.userInfo = payload;
-            state.userLogin.loading = false;
-            state.userLogin.success = true;
-        },
-        [loginUser.rejected]: (state, { payload }) => {
-            state.userLogin.error = payload;
-            state.userLogin.loading = false;
-        },
-        [signupUser.pending]: (state) => {
-            state.userSignup.loading = true;
-            state.userSignup.error = null;
-        },
-        [signupUser.fulfilled]: (state, { payload }) => {
-            state.userSignup.userInfo.email = payload.email;
-            state.userSignup.userInfo.password = payload.password;
-            state.userSignup.loading = false;
-            state.userSignup.success = true;
-        },
-        [signupUser.rejected]: (state, { payload }) => {
-            state.userSignup.error = payload;
-            state.userSignup.loading = false;
-        }
+    extraReducers: (builder) => {
+        builder
+            .addCase(loginUser.pending, (state, { payload }) => {
+                state.userLogin.loading = true;
+                state.userLogin.error = null;
+            })
+            .addCase(loginUser.fulfilled, (state, { payload }) => {
+                state.userLogin.userInfo = payload;
+                state.userLogin.loading = false;
+                state.userLogin.success = true;
+            })
+            .addCase(loginUser.rejected, (state, { payload }) => {
+                state.userLogin.error = payload;
+                state.userLogin.loading = false;
+            })
+            .addCase(signupUser.pending, (state, { payload }) => {
+                state.userSignup.loading = true;
+                state.userSignup.error = null;
+            })
+            .addCase(signupUser.fulfilled, (state, { payload }) => {
+                state.userSignup.userInfo.email = payload.email;
+                state.userSignup.userInfo.password = payload.password;
+                state.userSignup.loading = false;
+                state.userSignup.success = true;
+            })
+            .addCase(signupUser.rejected, (state, { payload }) => {
+                state.userSignup.error = payload;
+                state.userSignup.loading = false;
+            })
     }
 })
 

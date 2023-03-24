@@ -34,6 +34,10 @@ exports.addClients = async (req, res, next) => {
             data: {
                 userId,
                 name: req.body.name,
+                workdates: [{
+                    date: "",
+                    hours: []
+                }],
             }
         })
         return res.status(201).json({
@@ -96,7 +100,7 @@ exports.updateClients = async (req, res, next) => {
             },
             data: {
                 name: req.body.name,
-                workdate: req.body.workdate,
+                workdates: req.body.workdates,
             }
         })
         return res.status(200).json({

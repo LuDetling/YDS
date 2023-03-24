@@ -2,16 +2,22 @@ import axios from "axios"
 import { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import styled from "styled-components"
-import { setClientsData } from "../features/clients/clientsSlice"
+import { setClientsData, selectClient } from "../features/clients/clientsSlice"
 import DeleteClient from "./DeleteClient"
 import NewClient from "./NewClient"
-import UpdateClient from "./updateClient"
+import EditClient from "./EditClient"
 
 
-export default function FormClient() {
+
+export default function FormClient({ dateSelected }) {
     const dispatch = useDispatch();
     const { clients } = useSelector((state) => state.clients)
     const { userId } = JSON.parse(localStorage.getItem("user"));
+
+    const workdateDate = (client) => {
+        const indexDate = client.workdates.findIndex(date => date.date === dateSelected)
+        dispatch(selectClient([client, indexDate]))
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -22,29 +28,19 @@ export default function FormClient() {
         fetchData()
     }, [dispatch, userId]);
 
-    //exemple de clients tcs = timesClients
-    // const tcs = [{
-    //     name: "Mapple",
-    //     workdate: [{
-    //         date: "02-03-2023",
-    //         hours: ["08:00", "08:30", "15:00"],
-    //     }]
-    // }, {
-    //     name: "Lurto",
-    //     workdate: [{
-    //         date: "02-03-2023",
-    //         hours: ["08:00", "08:30", "17:00"],
-    //     }]
-    // }]
 
-    //Checkbox - submit - 
-    return (<ContentClient>
+    return (<ContentClient className="content-client">
+        <h2>Vos clients</h2>
         {clients ? clients.map((client) => (
             <div key={client.id}>
-                <label htmlFor={client.name}>{client.name}</label>
-                <input type="checkbox" name={client.name} id={client.name} />
-                <DeleteClient userId={userId} client={client} />
-                <UpdateClient userId={userId} client={client} />
+                <div className="label-input">
+                    <label htmlFor={client.name}>{client.name}</label>
+                    <input className="radio" type="radio" name="client" id={client.name} onClick={() => workdateDate(client)} />
+                </div>
+                <div className="edit-delete">
+                    <DeleteClient userId={userId} client={client} />
+                    <EditClient userId={userId} client={client} />
+                </div>
             </div>
         )) : null}
         <NewClient userId={userId} />
@@ -52,18 +48,31 @@ export default function FormClient() {
 }
 
 const ContentClient = styled.div`
-    width: 300px;
+    width: 200px;
     margin: 2rem auto;
+    h2 {
+        margin-bottom: 1rem;
+    }
     button {
         cursor: pointer;
     }
-    /* &:hover {
-        .delete {
-            display: block;
+    &>div {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .label-input {
+        display: flex;
+        align-items: center;
+        width: max-content;
+        label {
+            text-align: start;
+            line-break: anywhere;
         }
     }
-    .delete {
-        display: none;
-    } */
+    .edit-delete {
+        display: flex;
+        align-items: center;
+    }
 `
 
