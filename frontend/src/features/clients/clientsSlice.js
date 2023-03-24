@@ -5,7 +5,7 @@ export const clientsSlice = createSlice({
     initialState: {
         clients: null,
         clientSelected: null,
-        indexClientSelected: null,
+        hoursDay: null,
     },
     reducers: {
         setClientsData: (state, { payload }) => {
@@ -36,13 +36,15 @@ export const clientsSlice = createSlice({
             }
         },
         selectClient: (state, { payload }) => {
-            console.log(payload);
             state.clientSelected = payload[0];
-            state.indexClientSelected = payload[1];
-
+            state.hoursDay = payload[1];
+        },
+        resetClient: (state, { payload }) => {
+            state.clientSelected = null;
+            state.hoursDay = null;
         }
     }
 })
 
-export const { setClientsData, newClientData, deleteClientData, updateClientData, selectClient } = clientsSlice.actions;
+export const { setClientsData, newClientData, deleteClientData, updateClientData, selectClient, resetClient } = clientsSlice.actions;
 export default clientsSlice.reducer;

@@ -2,7 +2,7 @@ import axios from "axios"
 import { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import styled from "styled-components"
-import { setClientsData, selectClient } from "../features/clients/clientsSlice"
+import { setClientsData, selectClient, resetClient } from "../features/clients/clientsSlice"
 import DeleteClient from "./DeleteClient"
 import NewClient from "./NewClient"
 import EditClient from "./EditClient"
@@ -14,11 +14,17 @@ export default function FormClient({ dateSelected }) {
     const { clients } = useSelector((state) => state.clients)
     const { userId } = JSON.parse(localStorage.getItem("user"));
 
-    const workdateDate = (client) => {
-        const indexDate = client.workdates.findIndex(date => date.date === dateSelected)
-        dispatch(selectClient([client, indexDate]))
+    const sendWorkDate = (client) => {
+        dispatch(resetClient())
+        const indexDate = client.workdates.findIndex(date => date.date === dateSelected);
+        if (client.workdates[indexDate]) {
+            const hours = client.workdates[indexDate].hours;
+            dispatch(selectClient([client, hours]))
+            return
+        }
+        dispatch(selectClient([client, []]))
+        return
     }
-
     useEffect(() => {
         const fetchData = async () => {
             const response = await axios.get("http://localhost:5000/clients/" + userId)
@@ -28,6 +34,7 @@ export default function FormClient({ dateSelected }) {
         fetchData()
     }, [dispatch, userId]);
 
+    //au click j'ennvoie nom du client et hours
 
     return (<ContentClient className="content-client">
         <h2>Vos clients</h2>
@@ -35,7 +42,7 @@ export default function FormClient({ dateSelected }) {
             <div key={client.id}>
                 <div className="label-input">
                     <label htmlFor={client.name}>{client.name}</label>
-                    <input className="radio" type="radio" name="client" id={client.name} onClick={() => workdateDate(client)} />
+                    <input className="radio" type="radio" name="client" id={client.name} onClick={() => sendWorkDate(client)} />
                 </div>
                 <div className="edit-delete">
                     <DeleteClient userId={userId} client={client} />

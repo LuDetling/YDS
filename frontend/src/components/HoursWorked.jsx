@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { updateClientData, selectClient } from "../features/clients/clientsSlice";
+import { updateClientData, selectClient, resetClient } from "../features/clients/clientsSlice";
 
 const hoursArray = [];
 let min = 0;
@@ -40,8 +40,10 @@ export default function HoursWorked({ dateSelected }) {
   const dispatch = useDispatch();
   const [isSelected, setIsSelected] = useState(false)
   const clientSelected = useSelector(state => state.clients.clientSelected);
-  const indexClientSelected = useSelector(state => state.clients.indexClientSelected)
-  // const checkDate = clientSelected.workdates.findIndex(date => date.date === dateSelected);
+  const hoursDay = useSelector(state => state.clients.hoursDay)
+
+  useEffect(() => {
+  }, [dispatch]);
 
   const checkHours = (indexHour, value) => {
     return clientSelected.workdates[indexHour].hours.findIndex(hour => hour === value);
@@ -52,24 +54,21 @@ export default function HoursWorked({ dateSelected }) {
   }
 
   const updateClient = async (data) => {
-    console.log(data);
     try {
       const response = await axios.put("http://localhost:5000/clients/" + clientSelected.userId, {
         id: clientSelected.id,
         workdates: data,
       })
       dispatch(updateClientData(response.data.updateClients));
-      dispatch(selectClient([response.data.updateClients, indexClientSelected]))
+      dispatch(selectClient([response.data.updateClients, hoursDay]))
     } catch (error) {
       console.log(error);
     }
   }
 
-  const initClient = (hour) => {
+  const initClient = () => {
     return clientSelected.workdates.map((item) => ({
       ...item,
-      date: dateSelected,
-      hours: hour
     }))
   }
 
@@ -79,7 +78,7 @@ export default function HoursWorked({ dateSelected }) {
 
   }
 
-  // Peut etre moyen de refactoriser ce morceau
+  // never open
   const activeHours = (e, hours) => {
     e.preventDefault();
     activeBackground(e, hours)
@@ -94,18 +93,22 @@ export default function HoursWorked({ dateSelected }) {
       return
     }
 
-    const indexHour = checkHours(indexDate, hours);
     const recupHour = [...clientSelected.workdates[indexDate].hours];
+    const data = initClient()[indexDate]
+    const indexHour = checkHours(indexDate, hours);
 
-    // si date ou hours son vide alors on change
     if (indexHour === -1) {
-      recupHour.push(hours)
-      const data = initClient(recupHour);
-      updateClient(data);
+      recupHour.push(hours);
+      data.hours = recupHour;
+      arrayWorkdates[indexDate] = data
+      updateClient(arrayWorkdates);
+      return
     } else {
       const filterHour = recupHour.filter(e => e !== hours)
-      const data = initClient(filterHour);
-      updateClient(data);
+      data.hours = filterHour;
+      arrayWorkdates[indexDate] = data
+      updateClient(arrayWorkdates);
+      return
     }
   }
 
@@ -115,7 +118,7 @@ export default function HoursWorked({ dateSelected }) {
         <div className="content-hours" key={value} >
           <div >{value}</div>
           {
-            clientSelected ? <div className={clientSelected.workdates[indexClientSelected].hours.find(hour => hour === value) ? "select active-hour" : "select"} onMouseDown={clientSelected ? (e) => activeHours(e, value) : null} onMouseOver={isSelected && clientSelected ? (e) => activeHours(e, value) : null} onMouseUp={() => setIsSelected(false)} onMouseOut={() => setIsSelected(false)}></div> : <div className="select"> </div>
+            clientSelected ? <div className={hoursDay.find(hour => hour === value) ? "select active-hour" : "select"} onMouseDown={clientSelected ? (e) => activeHours(e, value) : null} onMouseOver={isSelected && clientSelected ? (e) => activeHours(e, value) : null} onMouseUp={() => setIsSelected(false)} onMouseOut={() => setIsSelected(false)}></div> : <div className="select"> </div>
           }
         </div>
       ))
