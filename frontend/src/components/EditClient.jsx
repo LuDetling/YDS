@@ -1,15 +1,9 @@
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { updateClientData } from "../features/clients/clientsSlice";
-import Icon from '@mdi/react';
-import { mdiSquareEditOutline } from '@mdi/js';
-import { useState } from "react";
 
-
-
-export default function UpdateClient({ client, userId, }) {
+export default function UpdateClient({ client, userId, resetEdit, edit }) {
     const dispatch = useDispatch();
-    const [edit, setEdit] = useState(false)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -19,18 +13,15 @@ export default function UpdateClient({ client, userId, }) {
                 name: e.target[0].value,
             })
             dispatch(updateClientData(response.data.updateClients));
-            setEdit(!edit);
         } catch (error) {
             console.log(error);
         }
-
+        resetEdit(!edit)
     }
 
-
     return <>
-        <Icon path={mdiSquareEditOutline} size={1} onClick={() => setEdit(!edit)} />
         {
-            edit ? <form onSubmit={handleSubmit}>
+            client ? <form onSubmit={handleSubmit} >
                 <input type="text" name="name" id="name" defaultValue={client.name} />
                 <input type="submit" value="Modifier" />
             </form> : null

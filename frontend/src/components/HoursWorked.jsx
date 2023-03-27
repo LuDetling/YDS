@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { updateClientData, selectClient, resetClient } from "../features/clients/clientsSlice";
+import { updateClientData, selectClient } from "../features/clients/clientsSlice";
 
 const hoursArray = [];
 let min = 0;
@@ -30,10 +30,7 @@ const allHours = () => {
 };
 allHours();
 
-const defaultWorkdate = {
-  date: null,
-  hours: []
-}
+
 
 
 export default function HoursWorked({ dateSelected }) {
@@ -53,14 +50,14 @@ export default function HoursWorked({ dateSelected }) {
     return clientSelected.workdates.findIndex(date => date.date === dateSelected);
   }
 
-  const updateClient = async (data) => {
+  const updateClient = async (data, hours) => {
     try {
       const response = await axios.put("http://localhost:5000/clients/" + clientSelected.userId, {
         id: clientSelected.id,
         workdates: data,
       })
       dispatch(updateClientData(response.data.updateClients));
-      dispatch(selectClient([response.data.updateClients, hoursDay]))
+      dispatch(selectClient([response.data.updateClients, hours]))
     } catch (error) {
       console.log(error);
     }
@@ -72,16 +69,15 @@ export default function HoursWorked({ dateSelected }) {
     }))
   }
 
-  const activeBackground = (e, hours) => {
-    setIsSelected(true);
-    e.target.classList.toggle("active-hour");
-
-  }
-
   // never open
   const activeHours = (e, hours) => {
     e.preventDefault();
-    activeBackground(e, hours)
+    setIsSelected(true);
+    const defaultWorkdate = {
+      date: null,
+      hours: []
+    }
+
     const arrayWorkdates = [...clientSelected.workdates];
     const indexDate = checkDate();
 
@@ -89,28 +85,29 @@ export default function HoursWorked({ dateSelected }) {
       defaultWorkdate.date = dateSelected;
       defaultWorkdate.hours.push(hours);
       arrayWorkdates.push(defaultWorkdate);
-      updateClient(arrayWorkdates);
+      updateClient(arrayWorkdates, defaultWorkdate.hours);
       return
     }
 
-    const recupHour = [...clientSelected.workdates[indexDate].hours];
+    const hoursDate = [...clientSelected.workdates[indexDate].hours];
     const data = initClient()[indexDate]
     const indexHour = checkHours(indexDate, hours);
 
     if (indexHour === -1) {
-      recupHour.push(hours);
-      data.hours = recupHour;
+      hoursDate.push(hours);
+      data.hours = hoursDate;
       arrayWorkdates[indexDate] = data
-      updateClient(arrayWorkdates);
+      updateClient(arrayWorkdates, data.hours);
       return
     } else {
-      const filterHour = recupHour.filter(e => e !== hours)
+      const filterHour = hoursDate.filter(e => e !== hours)
       data.hours = filterHour;
       arrayWorkdates[indexDate] = data
-      updateClient(arrayWorkdates);
+      updateClient(arrayWorkdates, data.hours);
       return
     }
   }
+
 
   return (
     <ContentSelector id="content-hours" >

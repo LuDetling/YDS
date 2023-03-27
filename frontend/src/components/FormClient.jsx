@@ -1,11 +1,15 @@
 import axios from "axios"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import styled from "styled-components"
 import { setClientsData, selectClient, resetClient } from "../features/clients/clientsSlice"
 import DeleteClient from "./DeleteClient"
 import NewClient from "./NewClient"
 import EditClient from "./EditClient"
+import Icon from '@mdi/react';
+import { mdiSquareEditOutline } from '@mdi/js';
+
+
 
 
 
@@ -13,6 +17,8 @@ export default function FormClient({ dateSelected }) {
     const dispatch = useDispatch();
     const { clients } = useSelector((state) => state.clients)
     const { userId } = JSON.parse(localStorage.getItem("user"));
+    const [edit, setEdit] = useState(false)
+    const [clientSelected, setClientSelected] = useState()
 
     const sendWorkDate = (client) => {
         dispatch(resetClient())
@@ -34,7 +40,18 @@ export default function FormClient({ dateSelected }) {
         fetchData()
     }, [dispatch, userId]);
 
-    //au click j'ennvoie nom du client et hours
+    //au click => client selectionné peut être edité 
+    const handleEdit = (client) => {
+        setClientSelected(client)
+        if (!clientSelected) {
+            console.log(clientSelected);
+            setEdit(!edit)
+            return
+        } else if (clientSelected !== client) {
+            return
+        }
+        setEdit(!edit)
+    }
 
     return (<ContentClient className="content-client">
         <h2>Vos clients</h2>
@@ -43,13 +60,16 @@ export default function FormClient({ dateSelected }) {
                 <div className="label-input">
                     <label htmlFor={client.name}>{client.name}</label>
                     <input className="radio" type="radio" name="client" id={client.name} onClick={() => sendWorkDate(client)} />
-                </div>
-                <div className="edit-delete">
+                    <Icon path={mdiSquareEditOutline} size={1} onClick={() => handleEdit(client)} />
                     <DeleteClient userId={userId} client={client} />
-                    <EditClient userId={userId} client={client} />
                 </div>
+                {clientSelected ? client.id === clientSelected.id && edit && < div className="edit-delete">
+                    <EditClient userId={userId} client={clientSelected} edit={edit} resetEdit={value => setEdit(value)} />
+                </div> : null}
             </div>
-        )) : null}
+        )
+        ) : null
+        }
         <NewClient userId={userId} />
     </ContentClient >)
 }
@@ -67,6 +87,7 @@ const ContentClient = styled.div`
         display: flex;
         align-items: center;
         justify-content: space-between;
+        flex-direction: column;
     }
     .label-input {
         display: flex;

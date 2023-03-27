@@ -1,7 +1,7 @@
 import Icon from '@mdi/react';
 import { mdiDelete } from '@mdi/js';
 import { useDispatch } from 'react-redux';
-import { deleteClientData } from '../features/clients/clientsSlice';
+import { deleteClientData, resetClient } from '../features/clients/clientsSlice';
 import axios from 'axios';
 
 export default function DeleteClient({ userId, client }) {
@@ -13,11 +13,11 @@ export default function DeleteClient({ userId, client }) {
                     id
                 }
             })
-            dispatch(deleteClientData(response.data.deletedClient))
+            dispatch(deleteClientData(response.data.deletedClient));
+            dispatch(resetClient())
         } catch (error) {
             console.log(error);
         }
     }
-    return (<Icon path={mdiDelete} size={1} className="delete" onClick={() => deleteClient(client.id)} />
-    )
+    return (<Icon path={mdiDelete} size={1} className="delete" onClick={() => deleteClient(client.id)} />)
 }
