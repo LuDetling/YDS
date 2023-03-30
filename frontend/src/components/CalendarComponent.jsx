@@ -31,6 +31,7 @@ export default function CalendarComponent() {
 }
 
 const Title = styled.h1`
+color: white;
 text-align: center;
 margin: 2rem 0;
   &::first-letter {

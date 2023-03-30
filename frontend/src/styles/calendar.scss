@@ -1,17 +1,19 @@
 .agenda-content {
-    background-color: $primary;
-    padding: 1rem;
+    background-color: #3170c3;
     margin: 2rem auto;
-    border-radius: 10px;
-    width: 400px;
+    border-radius: 20px;
+    width: 304px;
+    padding: 10px;
+    box-shadow: 3px 3px 10px black;
 }
 
 .calendar-content {
     background-color: white;
     border-radius: 10px;
     margin: auto;
-    border-radius: 10px;
+    border-radius: 20px;
     overflow: hidden;
+    padding: 8px;
 }
 //navigation
 
@@ -20,54 +22,78 @@
     justify-content: space-between;
     align-items: center;
     text-transform: capitalize;
-    background-color: $secondary;
-    .react-calendar__navigation__next2-button,
-    .react-calendar__navigation__prev2-button {
-        display: none;
-    }
+    margin-bottom: 32px;
+
+    
     
     button {
         cursor: pointer;
         border: none;
-        padding: 1rem;
         background-color: inherit;
         transition: 0.3s;
         flex-grow: inherit !important;
         font-size: 16px;
         font-weight: bold;
-        &:hover {
-            color: $primary;
-            background-color: white;
-        }
+        font-size: 20px;
+        font-family: "mukta-regular";
+        font-weight: lighter;
         span {
             text-transform: capitalize;
         }
     }
-    .react-calendar__navigation__label {
-        border: none;
-        width: auto;
-    }
-}
-
-//days name
-.react-calendar__month-view__weekdays {
-    text-align: center;
-    display: grid !important;
-    grid-template-columns: repeat(7, 1fr) !important;
-    justify-content: center;
-    margin: 20px 0;
-    div {
-        cursor: pointer;
-        color: $tertiary;
-        transition: 0.3s;
-        height: 50px;
+    .react-calendar__navigation__arrow {
+        width: 33px;
+        height: 33px;
+        border: #efefef solid 2px;
+        border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         &:hover {
-            color: white;
-            background-color: $tertiary;
+            background-color: #efefef;
         }
+    }
+    .react-calendar__navigation__label {
+        line-height: 33px;
+        border: none;
+        width: auto;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    .react-calendar__navigation__next2-button,
+    .react-calendar__navigation__prev2-button {
+        display: none;
+    }
+}
+
+
+
+//days name
+.react-calendar__month-view__weekdays {
+    margin-top: 32px;
+    position: relative;
+    text-align: center;
+    display: grid !important;
+    grid-template-columns: repeat(7, 1fr) !important;
+    justify-content: center;
+    &::before {
+        width: 100%;
+        content: '';
+        height: 1px;
+        width: calc(100% - 16px);
+        background-color: black;
+        position:absolute;
+        left: 8px;
+        top: -32px;
+    }   
+    div {
+        height: 37px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'mukta-regular';
+        font-size: 20px;
         abbr {
             text-decoration: none;
             text-transform: capitalize;
@@ -80,36 +106,36 @@
     text-align: center;
     display: grid !important;
     grid-template-columns: repeat(7, 1fr) !important;
+    justify-items: center;
+    height: 100%;
     button {
         cursor: pointer;
         border: none;
         font-size: 1rem;
-        height: 50px;
+        height: 37px;
+        width: 37px;
         background-color: inherit;
-        transition: 0.3s;
-        color: $secondary;
+        border-radius: 50%;
+        padding: 0;
         &:hover {
-            color: $primary;
-            background-color: $secondary;
+            color: $secondary;
+            border: 2px solid $secondary;
         }
     }
     .react-calendar__tile--now {
-        color: $primary;
-        background-color: $tertiary;
         color: white;
-        border: 2px solid $tertiary;
-    }
-    .react-calendar__tile--active,
-    .react-calendar__tile--range,
-    .react-calendar__tile--rangeStart,
-    .react-calendar__tile--rangeEnd,
-    .react-calendar__tile--rangeBothEnds {
-        color: $primary;
         background-color: $secondary;
+        border: 2px solid $secondary;
+        &:hover {
+            background-color: white;
+        }
     }
+
     .react-calendar__month-view__days__day--neighboringMonth {
         background-color: rgb(237, 225, 225);
         border-color: $primary;
         color: $primary;
+        opacity: 0;
+        pointer-events: none;
     }
 }

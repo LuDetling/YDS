@@ -36,7 +36,7 @@ export default function Login() {
             </div>
             {(errors.password?.type || error === "Mot de passe incorrect !") && (<p>Mot de passe incorrect</p>)}
 
-            {loading ? <div>Chargement</div> : <input type="submit" value="Se connecter" className="button" />}
+            {loading ? <div>Chargement</div> : <input type="submit" value="Se connecter" className="button log-button" />}
 
         </FormContent>
     </ContentInscription>
@@ -54,6 +54,7 @@ const ContentInscription = styled.div`
     border-radius: 10px;
     color: white;
     margin-top: 3rem;
+    box-shadow: 3px 3px 10px black;
     h1 {
         text-align: center;
         margin-bottom: 2rem;
@@ -77,7 +78,7 @@ div {
     }
 }
 p {
-    color: red;
+    color: white;
 }
 
 input {

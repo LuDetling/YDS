@@ -57,9 +57,11 @@ export default function FormClient({ dateSelected }) {
         <h2>Vos clients</h2>
         {clients ? clients.map((client) => (
             <div key={client.id}>
-                <div className="label-input">
-                    <label htmlFor={client.name}>{client.name}</label>
-                    <input className="radio" type="radio" name="client" id={client.name} onClick={() => sendWorkDate(client)} />
+                <div className="label-input-icone">
+                    <div className="label-input">
+                        <label htmlFor={client.name}>{client.name}</label>
+                        <input className="radio" type="radio" name="client" id={client.name} onClick={() => sendWorkDate(client)} />
+                    </div>
                     <Icon path={mdiSquareEditOutline} size={1} onClick={() => handleEdit(client)} />
                     <DeleteClient userId={userId} client={client} />
                 </div>
@@ -82,6 +84,7 @@ const ContentClient = styled.div`
     }
     button {
         cursor: pointer;
+        margin-top: 2rem;
     }
     &>div {
         display: flex;
@@ -89,7 +92,7 @@ const ContentClient = styled.div`
         justify-content: space-between;
         flex-direction: column;
     }
-    .label-input {
+    .label-input-icone {
         display: flex;
         align-items: center;
         width: max-content;
@@ -97,10 +100,12 @@ const ContentClient = styled.div`
             text-align: start;
             line-break: anywhere;
         }
-    }
-    .edit-delete {
-        display: flex;
-        align-items: center;
+        input {
+            margin: 0 2rem 0 .5rem;
+        }
+        svg {
+            cursor: pointer;
+        }
     }
 `
 

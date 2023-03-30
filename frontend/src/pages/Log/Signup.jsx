@@ -54,7 +54,7 @@ export default function Signup() {
             </div>
             {errors.password?.type && <p>Mot de passe trop court, minimum 8 charateres</p>}
             {
-                loading ? <p>Chargement</p> : <input type="submit" value="S'inscrire" className="button" />
+                loading ? <p>Chargement</p> : <input type="submit" value="S'inscrire" className="button log-button" />
             }
 
 
@@ -73,6 +73,7 @@ const ContentInscription = styled.div`
     border-radius: 10px;
     color: white;
     margin-top: 3rem;
+    box-shadow: 3px 3px 10px black;
 `
 
 const Title = styled.h1`
@@ -97,7 +98,7 @@ div {
     }
 }
 p {
-    color: red;
+    color: white;
 }
 
 input {

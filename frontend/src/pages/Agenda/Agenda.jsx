@@ -28,6 +28,7 @@ export default function Agenda() {
 const AgendaContent = styled.section`
   margin: 20px 0;
   text-align: center;
+  color: white;
 `;
 
 const Content = styled.div`

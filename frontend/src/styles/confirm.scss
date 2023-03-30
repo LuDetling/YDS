@@ -1,0 +1,38 @@
+@keyframes heightAnimation {
+    from {
+        height: 0;
+    }
+    to {
+        height: 300px;
+    }
+}
+.confirm-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: absolute;
+    left: 10%;
+    top: 20px;
+    border-radius: 10px;
+    width: 80%;
+    height: 300px;
+    background-color: rgba(0, 0, 0, .9);
+    animation-name: heightAnimation;
+    animation-duration: .5s;
+    transition: .5s;
+    overflow: hidden;
+    .content-delete {
+        background-color: $secondary;
+        padding: 2rem;
+        border-radius: 10px;
+        width: 75%;
+    }
+    span {
+        font-weight: bold;
+        color: black;
+    }
+}
+.hide-confirm-content {
+    height: 0;
+}

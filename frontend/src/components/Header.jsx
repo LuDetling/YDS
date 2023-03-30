@@ -4,20 +4,6 @@ import colors from "../styles/colors";
 import Logout from '../pages/Log/Logout'
 import { useSelector } from "react-redux";
 
-
-const HeaderContent = styled.header`
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
-  background-color: ${colors.primary};
-  position: sticky;
-  top: 0;
-  .right-nav {
-    display: flex;
-    align-items: center;
-  }
-`;
-
 export default function Header() {
   const { userInfo } = useSelector(state => state.user.userLogin)
   return (
@@ -42,3 +28,24 @@ export default function Header() {
     </HeaderContent>
   );
 }
+
+const HeaderContent = styled.header`
+  display: flex;
+  justify-content: space-between;
+  background-color: ${colors.secondary};
+  height: 72px;
+  position: sticky;
+  top: 0;
+  font-size: 20px;
+  padding: 0 16px;
+  /* box-shadow: 0px 2px 10px white; */
+  border-bottom: 1px solid white;
+  .left-nav {
+    display: flex;
+    align-items: center;
+  }
+  .right-nav {
+    display: flex;
+    align-items: center;
+  }
+`;

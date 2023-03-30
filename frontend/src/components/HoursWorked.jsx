@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { updateClientData, selectClient } from "../features/clients/clientsSlice";
+import { updateClientData, selectClient, resetClient } from "../features/clients/clientsSlice";
 
 const hoursArray = [];
 let min = 0;
@@ -40,6 +40,7 @@ export default function HoursWorked({ dateSelected }) {
   const hoursDay = useSelector(state => state.clients.hoursDay)
 
   useEffect(() => {
+    dispatch(resetClient())
   }, [dispatch]);
 
   const checkHours = (indexHour, value) => {
@@ -108,18 +109,21 @@ export default function HoursWorked({ dateSelected }) {
     }
   }
 
+  //créer un bouton pour valider au lieu de spam la bdd 
 
   return (
     <ContentSelector id="content-hours" >
       {hoursArray.map((value) => (
         <div className="content-hours" key={value} >
-          <div >{value}</div>
+          <div className="hours">{value}</div>
           {
             clientSelected ? <div className={hoursDay.find(hour => hour === value) ? "select active-hour" : "select"} onMouseDown={clientSelected ? (e) => activeHours(e, value) : null} onMouseOver={isSelected && clientSelected ? (e) => activeHours(e, value) : null} onMouseUp={() => setIsSelected(false)} onMouseOut={() => setIsSelected(false)}></div> : <div className="select"> </div>
           }
         </div>
       ))
       }
+      {/* activer ce bouton */}
+      <button className="button valid-button">valider</button>
     </ContentSelector >
   );
 }
@@ -127,17 +131,23 @@ export default function HoursWorked({ dateSelected }) {
 const ContentSelector = styled.div`
   margin: 2rem auto;
   width: 200px;
+  button {
+    margin-top: 1rem;
+  }
   .content-hours {
     width: 100%;
     display: flex;
+    .hours {
+      width: 60px;
+      line-height: 30px;
+    }
     div {
-      padding: 0.5rem;
-      border-bottom: 1px solid black;
+      border-bottom: 1px solid white;
     }
     .select {
       cursor: pointer;
       width: 100%;
-      border-left: 1px solid black;
+      border-left: 1px solid white;
       &.active-hour {
         background-color: hsl(1, 75%, 80%);
         border-left-color: rgb(232, 95, 92);

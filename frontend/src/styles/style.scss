@@ -2,14 +2,17 @@
 @import "colors.scss";
 @import "calendar.scss";
 @import "button.scss";
+@import "fonts.scss";
+@import "footer.scss";
+@import "confirm.scss";
 
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    font-family: "mukta-regular",-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
         "Droid Sans", "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #026c7c;
+    background-color: $tertiary;
     h1 {
         font-size: 32px;
     }
