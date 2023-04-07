@@ -1,29 +1,38 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import colors from "../styles/colors";
-import Logout from '../pages/Log/Logout'
+import Logout from "../pages/Log/Logout";
 import { useSelector } from "react-redux";
 
 export default function Header() {
-  const { userInfo } = useSelector(state => state.user.userLogin)
+  const { userInfo } = useSelector((state) => state.user.userLogin);
   return (
     <HeaderContent>
       <div className="left-nav">
-        <NavLink to="/" className="button">Accueil</NavLink>
+        <NavLink to="/" className="button">
+          Accueil
+        </NavLink>
       </div>
       <div className="right-nav">
-        {
-          ((userInfo) && <>
-            <NavLink to="profil" className="button">Profil</NavLink>
-            <NavLink to="idees" className="button">Idees</NavLink>
+        {(userInfo && (
+          <>
+            <NavLink to="profil" className="button">
+              Profil
+            </NavLink>
+            <NavLink to="idees" className="button">
+              Idees
+            </NavLink>
             <Logout />
-          </>) || (
-            <>
-              <NavLink to="login" className="button">Se connecter</NavLink>
-              <NavLink to="signup" className="button">S'inscrire</NavLink>
-            </>
-          )
-        }
+          </>
+        )) || (
+          <>
+            <NavLink to="login" className="button">
+              Se connecter
+            </NavLink>
+            <NavLink to="signup" className="button">
+              S'inscrire
+            </NavLink>
+          </>
+        )}
       </div>
     </HeaderContent>
   );
@@ -32,7 +41,7 @@ export default function Header() {
 const HeaderContent = styled.header`
   display: flex;
   justify-content: space-between;
-  background-color: ${colors.secondary};
+  background-color: rgb(49, 112, 195, 0.8);
   height: 72px;
   position: sticky;
   top: 0;
@@ -47,5 +56,8 @@ const HeaderContent = styled.header`
   .right-nav {
     display: flex;
     align-items: center;
+  }
+  .button:not(:last-child) {
+    margin-right: 2rem;
   }
 `;

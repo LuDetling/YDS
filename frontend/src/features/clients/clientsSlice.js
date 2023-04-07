@@ -42,7 +42,7 @@ export const clientsSlice = createSlice({
         resetClient: (state, { payload }) => {
             state.clientSelected = null;
             state.hoursDay = [];
-        }
+        },
     }
 })
 

@@ -1,23 +1,20 @@
 .button {
-    cursor: pointer;
-    text-decoration: none;
-    text-align: center;
-    color: white;
-    display: inline-block;
-    line-height: 30px;
-    &.active {
-      text-decoration: underline;
-    }
-    &:hover {
-      text-decoration: underline;
-    }
-    &:not(:last-child) {
-      margin-right: 2rem;
-    }
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  color: white;
+  display: inline-block;
+  line-height: 30px;
+  &.active {
+    text-decoration: underline;
+  }
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .danger-button {
-  background-color: #FF313B;
+  background-color: #ff313b;
   color: white;
   border: none;
   font-size: 20px;
@@ -27,7 +24,7 @@
 }
 
 .logout-button {
-  background-color: #FF313B;
+  background-color: #ff313b;
   width: 40px;
   height: 40px;
   display: block;
@@ -43,7 +40,7 @@
   background-color: $tertiary;
   // border: 1px solid white;
   padding: 0 1rem;
-  font-family: 'mukta-regular';
+  font-family: "mukta-regular";
   border-radius: 5px;
 }
 .valid-button {
@@ -55,4 +52,16 @@
   &:active {
     border-style: inset;
   }
+}
+
+.disable-button {
+  padding: 0 1rem;
+  color: black;
+  background-color: grey;
+  border: 2px outset black;
+  border-radius: 5px;
+  &:active {
+    border-style: inset;
+  }
+  pointer-events: none;
 }
