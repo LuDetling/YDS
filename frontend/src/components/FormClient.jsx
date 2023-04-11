@@ -44,7 +44,6 @@ export default function FormClient({ dateSelected }) {
     const handleEdit = (client) => {
         setClientSelected(client)
         if (!clientSelected) {
-            console.log(clientSelected);
             setEdit(!edit)
             return
         } else if (clientSelected !== client) {
@@ -62,17 +61,18 @@ export default function FormClient({ dateSelected }) {
                         <label htmlFor={client.name}>{client.name}</label>
                         <input className="radio" type="radio" name="client" id={client.name} onClick={() => sendWorkDate(client)} />
                     </div>
+                    <div className="test"></div>
                     <Icon path={mdiSquareEditOutline} size={1} onClick={() => handleEdit(client)} />
                     <DeleteClient userId={userId} client={client} />
                 </div>
-                {clientSelected ? client.id === clientSelected.id && edit && < div className="edit-delete">
-                    <EditClient userId={userId} client={clientSelected} edit={edit} resetEdit={value => setEdit(value)} />
+                {clientSelected ? client.id === clientSelected.id && edit && <div className="edit-delete">
+                    <EditClient userId={userId} client={clientSelected} edit={edit} clients={clients} resetEdit={value => setEdit(value)} />
                 </div> : null}
             </div>
         )
         ) : null
         }
-        <NewClient userId={userId} />
+        <NewClient userId={userId} clients={clients} />
     </ContentClient >)
 }
 

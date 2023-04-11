@@ -11,20 +11,18 @@ export default function DeleteClient({ userId, client }) {
     const [confirmDelete, setConfirmDelete] = useState(false)
 
 
-    const deleteClient = async (id) => {
+    const deleteClient = async () => {
         hideContent()
         try {
             const response = await axios.delete("http://localhost:5000/clients/" + userId, {
                 data: {
-                    id
+                    id: client.id
                 }
             })
-            setTimeout(() => {
-                dispatch(deleteClientData(response.data.deletedClient));
-                if (id === clientSelected.id) {
-                    dispatch(resetClient())
-                }
-            }, 500)
+            if (clientSelected.id === client.id) {
+                dispatch(resetClient())
+            }
+            dispatch(deleteClientData(response.data.deletedClient));
         } catch (error) {
             console.log(error);
         }
@@ -44,7 +42,7 @@ export default function DeleteClient({ userId, client }) {
                         <h2>Souhaitez vous  <span>supprimer entièrement de la base de donnée</span> le client : {client.name}</h2>
                         <div className="content-button">
                             <div className="button cancel" onClick={() => hideContent()}>Annuler</div>
-                            <div className="button danger-button" onClick={() => deleteClient(client.id)}>Supprimer</div>
+                            <div className="button danger-button" onClick={() => deleteClient()}>Supprimer</div>
                         </div>
                     </div>
                 </div> : null
