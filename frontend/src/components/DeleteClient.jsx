@@ -19,8 +19,11 @@ export default function DeleteClient({ userId, client }) {
                     id: client.id
                 }
             })
-            if (clientSelected.id === client.id) {
+            if (clientSelected === client) {
                 dispatch(resetClient())
+            } else if (!clientSelected) {
+                dispatch(resetClient())
+
             }
             dispatch(deleteClientData(response.data.deletedClient));
         } catch (error) {
